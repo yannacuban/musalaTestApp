@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="w-100 d-none d-sm-block">
+        <div class="row pt-3">
+            <div class="col">
+                <h2 class="text-danger font-weight-normal">Gateway List</h2>
+            </div>
+            <div class="col-5">
+                <p>Lorem ipsum dolor sit amet, no mundi rationibus pri, ne elit graeci iuvaret his,
+                    vim partem labore inimicus et. In sit primis dolorum fuisset.
+                </p>
+            </div>
+            <div class="col text-right pr-0">
+                <button routerLink="/gateway" class="btn btn-secondary text-uppercase">
+                    Create Gateway
+                </button>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-danger d-sm-none mt-3 font-weight-normal mb-0">Create Gateway</h2>
+</div>
+<div id="content" class="pb-3 pt-3">
+    <div class="container pb-3 pt-3">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="col-xs-12 col-sm-6" *ngIf="sortFilters.length > 0">
+                    <ng-select [items]="sortFilters" [ngModel]="'name'" (change)="FilterChange($event)" bindLabel="name"
+                        bindValue="property">
+                        <ng-template ng-label-tmp let-item="item">
+                            <i class="fa"
+                                [ngClass]="{'fa-sort-amount-asc': item.direction === 'asc', 'fa-sort-amount-desc': item.direction === 'desc'}"></i>
+                            {{item.name}}
+                        </ng-template>
+                    </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-4 text-center">
+                    <i [class.invisible]="!callingService"
+                        class="center-fix main-spinner fa fa-spin fa-spinner fa-2x mt-2 mt-sm-0"></i>
+                </div>
+                <div class="w-100 mt-1 mb-1"></div>
+                <div class="col p-sm-3">
+                    <ul class="list-group gateway-list">
+                        <li *ngIf="gateways.length === 0"
+                            class="list-group-item border-0 mb-2 bg-light d-flex align-items-center">
+                            <h4>No gateways were found</h4>
+                        </li>
+                        <div *ngIf="gateways.length > 0">
+                            <li class="row list-group-item border-0 mb-2 bg-light d-flex justify-content-between align-items-center"
+                            [ngClass]="{'active': selectedGateway == gt}"
+                            *ngFor="let gt of gateways"
+                             (click)="onSelected(gt)">
+                                <div class="col-6 col-md-5 d-flex align-items-center">
+                                    <img class="d-none d-sm-block mr-4" src="../../assets/img/image1.png" alt=""
+                                        style="height: 60px;width: 60px">
+                                    <div class="">
+                                        <span class="gateway-name">{{gt.name}}</span><br>
+                                        <span class="gateway-serialNumber">{{gt.serialNumber}}</span><br>
+                                        <span class="gateway-ipAddress">{{gt.ipAddress}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4" style="text-align: right;">
+                                    <button class="btn btn-secondary text-uppercase" [routerLink]="['/edit', gt.id ]">Edit
+                                    </button>
+                                    <button class="btn btn-danger text-uppercase" style="margin-left:10px;" (click)="DeleteGateway(gt.id)">Delete
+                                    </button>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+                <div class="w-100 mb-1"></div>
+                <div class="col text-center">
+                    <ngb-pagination [collectionSize]="serviceParams.totalNumberOfRecords" [(page)]="serviceParams.pageSize" [maxSize]="10"
+                        [boundaryLinks]="true" (pageChange)="PageChage($event)"></ngb-pagination>
+                </div>
+            </div>
+            <div class="col-md-5">
+               <div class="panel-detail" style="margin-left: 100px; margin-top: 20px;">
+                <app-gateway-detail
+                *ngIf="selectedGateway.name; else infoText"
+                [gateway] = "selectedGateway"></app-gateway-detail>
+                <ng-template #infoText>
+                    <p>Please select a Gateway!</p>
+                </ng-template>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>

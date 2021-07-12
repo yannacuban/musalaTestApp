@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="w-100 d-none d-sm-block">
+    <div class="row pt-3">
+      <div class="col">
+        <h2 class="text-danger font-weight-normal">Create Gateway</h2>
+      </div>
+      <div class="col-5">
+        <p>Lorem ipsum dolor sit amet, no mundi rationibus pri, ne elit graeci iuvaret his,
+          vim partem labore inimicus et. In sit primis dolorum fuisset.
+        </p>
+      </div>
+      <div class="col text-right pr-0">
+        <button routerLink="/gatewayList" class="btn btn-secondary text-uppercase">
+          Gateway List
+        </button>
+      </div>
+    </div>
+  </div>
+  <h4 class="text-danger d-sm-none mt-3 font-weight-normal mb-0">Create Gateway</h4>
+  <p class="d-sm-none">Lorem ipsum dolor sit amet, no mundi rationibus pri, ne elit graeci iuvaret his,
+    vim partem labore inimicus et.
+  </p>
+</div>
+<div id="content" class="pb-3 pt-3">
+  <form role="form" #gatewayForm="ngForm" (ngSubmit)="SubmitGatewayForm()">
+    <div class="container pb-3 pt-3">
+      <div class="d-flex flex-column flex-sm-row mb-2">
+        <h4 class="text-danger font-weight-normal">Gateways</h4>
+        <i [class.invisible]="!callingService" class="center-fix main-spinner fa fa-spin fa-spinner fa-2x mt-2 mt-sm-0"
+          style="margin-left: 20px;"></i>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-globe fa-2x"></i>
+          <input type="text" class="custom  form-control mb-2 mr-sm-2 mb-sm-0 input-border" placeholder="Name"
+            name="gatewayName" required [(ngModel)]="selectedGateway.name">
+        </div>
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-barcode fa-2x"></i>
+          <input type="text" class="custom  form-control mb-2 mr-sm-2 mb-sm-0 input-border" placeholder="Serial Number"
+            name="gatewaySerialNumber" required [(ngModel)]="selectedGateway.serialNumber">
+        </div>
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-laptop fa-2x"></i>
+          <input type="text" class="custom form-control mb-2 mr-sm-2 mb-sm-0 input-border" placeholder="Ip Address"
+            name="gatewayIpAddress"  [dropSpecialCharacters]="false" mask="IP" required [(ngModel)]="selectedGateway.ipAddress">
+        </div>
+      </div>
+      <div class="w-100 mb-3"></div>
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-between mb-2">         
+        <div></div>
+        <div class="d-flex justify-content-around">
+          <button type="button" class="btn d-none d-sm-block btn-secondary pl-3 pr-3 text-uppercase"
+          [disabled]="!managePeripherals" (click)="peripheralsisCollapsed = !peripheralsisCollapsed">Manage Peripherals
+        </button>
+        <button type="button" class="btn d-sm-none btn-block btn-secondary text-uppercase"
+          [disabled]="!managePeripherals" (click)="peripheralsisCollapsed = !peripheralsisCollapsed">Manage Peripherals
+        </button> 
+          <button type="submit" class="btn d-none d-sm-block btn-danger pl-3 pr-3 ml-sm-3 text-uppercase"
+          [disabled]="!gatewayForm.valid">Submit
+        </button>
+        <button type="submit" class="btn d-sm-none btn-block btn-danger text-uppercase"
+          [disabled]="!gatewayForm.valid">Submit
+        </button>          
+        </div>
+      </div> 
+      <div [ngbCollapse]="peripheralsisCollapsed">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between mb-2" style="margin-top: 3rem;">
+          <h4 class="text-danger font-weight-normal">Peripherals</h4>
+          <div class="d-flex justify-content-around">
+            <button class="btn btn-danger text-uppercase pl-3 pr-3 ml-sm-3" type="button"
+              (click)="AddPeripheral(peripheralEditModal)">Add</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="w-100 mb-3"></div>
+          <div class="col">
+            <div>
+              <div class="table-container">
+                <table class="table table-secondary table-hover">
+                  <thead>
+                    <tr class="bg-secondary" style="color: white; text-align: center;">
+                      <th scope="col">Vendor</th>
+                      <th scope="col">UID</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let peripheral of peripheralList" style="text-align: center;">
+                      <th>{{peripheral.vendor}}</th>
+                      <td>{{peripheral.uid}}</td>
+                      <td>{{peripheral.status}}</td>
+                      <td>
+                        <div>
+                          <i class="fa fa-edit fa-2x" (click)="SelectPeripheral(peripheral,peripheralEditModal)"></i>
+                          <i class="fa fa-remove fa-2x" style="margin-left: 20px;"
+                            (click)="RemovePeripheral(peripheral.id)"></i>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>     
+    </div>
+  </form>
+</div>
+
+<ng-template #peripheralEditModal let-c="close" let-d="dismiss">
+  <form role="form" #peripheralForm="ngForm" (ngSubmit)="SubmitPeripheralForm(c)">
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Peripheral</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-user-circle-o fa-2x"></i>
+          <input type="text" class="custom form-control mb-2 mr-sm-2 mb-sm-0 input-border" placeholder="Vendor"
+            name="peripheralVendor" required [(ngModel)]="selectedPeripheral.vendor">
+        </div>
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-barcode fa-2x"></i>
+          <input type="number" class="custom form-control mb-2 mr-sm-2 mb-sm-0 input-border" placeholder="UID"
+            name="peripheralUid" required [(ngModel)]="selectedPeripheral.uid">
+        </div>
+        <div class="col-xs-12 col-sm-4 input-has-icon-start">
+          <i class="fa fa-toggle-on fa-2x" style="z-index: 9999"></i>
+          <ng-select [items]="peripheralStatusList" name="peripheralStatus" required [ngModel]="selectedPeripheral.status"
+            class="custom mb-2 mb-sm-0" placeholder="Status" (change)="ChangeStatus($event)">
+            <ng-template ng-label-tmp let-item="item">
+              {{item}}
+            </ng-template>
+          </ng-select>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      <button class="btn btn-danger text-uppercase pl-3 pr-3" type="submit" [disabled]="!peripheralForm.valid">Save
+      </button>
+    </div>
+  </form>
+</ng-template>
