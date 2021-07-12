@@ -1,0 +1,66 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+#header {
+  .bd-pageheader {
+    padding-top: 8rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    background: transparent url('../assets/img/banner.png') no-repeat;
+    background-size: cover;
+    color: white;
+
+    .company-logo-name {
+      font-size: 3rem;
+      margin-right: 2rem;
+      margin-left: 7rem;
+      b {
+        text-transform: uppercase;
+      }
+      i {
+        font-weight: 300;
+      }
+    }
+    .company-logo-description {
+      font-size: 2.5rem;      
+      line-height: 2;     
+      font-weight: 200;
+    }
+
+  }
+  .options {
+    position: absolute;
+    right: 10rem;
+    top: 2rem;    
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  #header {
+    a {
+      text-decoration: none;
+    }
+    .bd-pageheader {
+      margin-bottom: 0px;
+      .company-logo-description {
+        display: none;
+      }
+      .company-logo-name {
+        font-size: 2.5rem;
+      }
+      .mobile-header-link a {
+        color: white;
+      }
+    }    
+  }
+}
+
+@include media-breakpoint-down(md) {
+    #header {     
+      .bd-pageheader {
+        margin-bottom: 0px;
+        .company-logo-description {
+          display: none;
+        }       
+      }    
+    }
+  }

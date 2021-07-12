@@ -1,0 +1,29 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.input-border {
+    border: 1px solid lightgray;
+  }
+
+  .form-control{
+    height: auto !important;
+  }
+
+  i.fa-remove:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  i.fa-edit:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  .table td, .table th {
+    min-width: 100px;
+}
+
+@include media-breakpoint-down(xs) {
+  .fa-remove{
+    margin-left: 10px !important;
+  } 
+}

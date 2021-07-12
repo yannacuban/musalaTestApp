@@ -1,0 +1,19 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.input-border {
+    border: 1px solid lightgray;
+  }
+
+  .list-group-item.active{
+    background-color: #d5dbe1 !important;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .panel-detail{
+      margin-left: 50px !important;
+    }
+    .btn-danger{
+      margin-top: 10px;
+    }
+  }
+  

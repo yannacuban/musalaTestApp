@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-xs-12">
+        <img class="d-none d-sm-block mr-4" src="../../assets/img/image1.png" alt="" style="height: 60px;width: 60px">
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+       <h1>{{gateway.name}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        {{gateway.serialNumber}}
+     </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        {{gateway.ipAddress}}
+     </div>
+</div>
+<hr>
+<div class="col-xs-12">
+    <p>Peripherals</p>
+    <ul class="list-group">
+        <li class="list-group-item" style="cursor: pointer" *ngFor="let peripheral of gateway.peripheralList">
+            <div>
+                <strong>{{peripheral.created}}</strong>
+            </div>
+            <div>
+                {{peripheral.uid}} - {{peripheral.vendor}} ({{peripheral.status}})
+            </div>           
+        </li>
+    </ul>
+ </div>  
+
